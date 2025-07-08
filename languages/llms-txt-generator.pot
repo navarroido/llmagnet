@@ -1,0 +1,143 @@
+# Copyright (C) 2023 WordPress Developer
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: LLMS.txt Generator 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/llms-txt-generator\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-01-01T12:00:00+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.8.1\n"
+"X-Domain: llms-txt-generator\n"
+
+#. Plugin Name of the plugin
+msgid "LLMS.txt Generator"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://wordpress.org/plugins/llms-txt-generator/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Automatically creates and maintains an llms.txt file and associated Markdown files for LLM crawlers."
+msgstr ""
+
+#. Author of the plugin
+msgid "WordPress Developer"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://example.com"
+msgstr ""
+
+#: includes/class-admin.php:53
+msgid "LLMS.txt Settings"
+msgstr ""
+
+#: includes/class-admin.php:54
+msgid "LLMS.txt"
+msgstr ""
+
+#: includes/class-admin.php:77
+msgid "General Settings"
+msgstr ""
+
+#: includes/class-admin.php:84
+msgid "Content Types to Include"
+msgstr ""
+
+#: includes/class-admin.php:91
+msgid "Content Export"
+msgstr ""
+
+#: includes/class-admin.php:98
+msgid "Time Period"
+msgstr ""
+
+#: includes/class-admin.php:105
+msgid "Cleanup on Uninstall"
+msgstr ""
+
+#: includes/class-admin.php:180
+msgid "WordPress root directory is not writable. LLMS.txt cannot be generated."
+msgstr ""
+
+#: includes/class-admin.php:185
+msgid "LLMS.txt Status"
+msgstr ""
+
+#: includes/class-admin.php:187
+msgid "Root Directory:"
+msgstr ""
+
+#: includes/class-admin.php:189
+msgid "(Writable)"
+msgstr ""
+
+#: includes/class-admin.php:191
+msgid "(Not Writable)"
+msgstr ""
+
+#: includes/class-admin.php:195
+msgid "Last Generated:"
+msgstr ""
+
+#: includes/class-admin.php:198
+msgid "Never"
+msgstr ""
+
+#: includes/class-admin.php:202
+msgid "Generate Now"
+msgstr ""
+
+#: includes/class-admin.php:221
+msgid "Configure which content should be included in the llms.txt file and associated Markdown exports."
+msgstr ""
+
+#: includes/class-admin.php:263
+msgid "Include full content (unchecked = excerpt only)"
+msgstr ""
+
+#: includes/class-admin.php:279
+msgid "Number of days of content to include (0 = all content)"
+msgstr ""
+
+#: includes/class-admin.php:295
+msgid "Delete llms.txt and llms-docs/ directory when plugin is uninstalled"
+msgstr ""
+
+#: includes/class-admin.php:328
+msgid "Generating..."
+msgstr ""
+
+#: includes/class-admin.php:329
+msgid "LLMS.txt generated successfully!"
+msgstr ""
+
+#: includes/class-admin.php:330
+msgid "Error generating LLMS.txt. Please check server permissions."
+msgstr ""
+
+#: includes/class-admin.php:342
+msgid "Security check failed."
+msgstr ""
+
+#: includes/class-admin.php:347
+msgid "You do not have permission to perform this action."
+msgstr ""
+
+#: includes/class-admin.php:355
+msgid "LLMS.txt generated successfully!"
+msgstr ""
+
+#: includes/class-admin.php:359
+msgid "Error generating LLMS.txt. Please check server permissions."
+msgstr ""
+
+#: includes/class-admin.php:379
+msgid "LLMS.txt Generator cannot write to your WordPress root directory (%s). Please check file permissions."
+msgstr "" 

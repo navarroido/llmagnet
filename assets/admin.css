@@ -1,0 +1,51 @@
+/**
+ * LLMS.txt Generator Admin Styles
+ */
+
+.llms-txt-status-box {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    padding: 15px;
+    margin: 20px 0;
+}
+
+.llms-txt-status-box h2 {
+    margin-top: 0;
+}
+
+.llms-txt-status-ok {
+    color: #46b450;
+    font-weight: bold;
+}
+
+.llms-txt-status-error {
+    color: #dc3232;
+    font-weight: bold;
+}
+
+#llms-txt-generate-now {
+    margin-right: 10px;
+}
+
+.llms-txt-status-box .spinner {
+    float: none;
+    vertical-align: middle;
+}
+
+.llms-txt-status-message {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+.llms-txt-status-message.success {
+    background-color: #f0f8e8;
+    border: 1px solid #7ad03a;
+}
+
+.llms-txt-status-message.error {
+    background-color: #fbeaea;
+    border: 1px solid #dc3232;
+} 

@@ -1,0 +1,18 @@
+# What this site is about
+*Title:* My WordPress Site
+*Tagline:* Just another WordPress site
+
+# Key sections
+- /   — My WordPress Site
+- /blog/   — Blog
+- /about/   — About Us
+- /contact/   — Contact Us
+- /services/   — Our Services
+- /products/   — Products
+
+# Markdown exports (clean text)
+- /llms-docs/hello-world.md
+- /llms-docs/sample-page.md
+- /llms-docs/about-us.md
+- /llms-docs/contact-us.md
+- /llms-docs/our-services.md 

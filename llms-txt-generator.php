@@ -33,6 +33,9 @@ define('LLMS_TXT_GENERATOR_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('LLMS_TXT_GENERATOR_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('LLMS_TXT_GENERATOR_PLUGIN_BASENAME', plugin_basename(__FILE__));
 
+// Development mode - set to true when developing with Vite
+define('LLMS_TXT_DEV_MODE', false);
+
 // Enable error reporting for debugging
 if (!function_exists('llms_txt_error_handler')) {
     function llms_txt_error_handler($errno, $errstr, $errfile, $errline) {

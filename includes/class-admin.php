@@ -46,6 +46,9 @@ class Admin {
         // Add AJAX handler for manual generation
         add_action('wp_ajax_llms_txt_generate_now', [$this, 'ajax_generate_now']);
         
+        // Add AJAX handler for saving settings
+        add_action('wp_ajax_llms_txt_save_settings', [$this, 'ajax_save_settings']);
+        
         // Add admin notices
         add_action('admin_notices', [$this, 'admin_notices']);
     }
@@ -75,45 +78,6 @@ class Admin {
             'llms_txt_settings',
             Generator::OPTION_NAME,
             [$this, 'sanitize_settings']
-        );
-        
-        add_settings_section(
-            'llms_txt_general_section',
-            esc_html__('General Settings', 'llms-txt-generator'),
-            [$this, 'render_general_section'],
-            'llms-txt-settings'
-        );
-        
-        add_settings_field(
-            'llms_txt_post_types',
-            esc_html__('Content Types to Include', 'llms-txt-generator'),
-            [$this, 'render_post_types_field'],
-            'llms-txt-settings',
-            'llms_txt_general_section'
-        );
-        
-        add_settings_field(
-            'llms_txt_full_content',
-            esc_html__('Content Export', 'llms-txt-generator'),
-            [$this, 'render_full_content_field'],
-            'llms-txt-settings',
-            'llms_txt_general_section'
-        );
-        
-        add_settings_field(
-            'llms_txt_days_to_include',
-            esc_html__('Time Period', 'llms-txt-generator'),
-            [$this, 'render_days_field'],
-            'llms-txt-settings',
-            'llms_txt_general_section'
-        );
-        
-        add_settings_field(
-            'llms_txt_delete_on_uninstall',
-            esc_html__('Cleanup on Uninstall', 'llms-txt-generator'),
-            [$this, 'render_delete_field'],
-            'llms-txt-settings',
-            'llms_txt_general_section'
         );
     }
 
@@ -157,143 +121,39 @@ class Admin {
             return;
         }
         
+        // Add a more specific container with a wrapper and fallback content
+        echo '<div class="wrap">';
+        echo '<div id="llms-txt-app" style="min-height: 500px;">';
+        
+        // Fallback content that will be replaced by React if it loads successfully
+        echo '<h1>' . esc_html__('LLMS.txt Settings', 'llms-txt-generator') . '</h1>';
+        echo '<p>' . esc_html__('Loading application...', 'llms-txt-generator') . '</p>';
+        echo '<p>' . esc_html__('If this message persists, there may be an issue with the JavaScript application. Please check your browser console for errors.', 'llms-txt-generator') . '</p>';
+        
+        // Add a simple status box as fallback
         $is_writable = $this->generator->is_root_writable();
         $last_generated = $this->generator->get_last_generated_time();
-        ?>
-        <div class="wrap">
-            <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
-            
-            <?php if (!$is_writable) : ?>
-                <div class="notice notice-error">
-                    <p><?php esc_html_e('WordPress root directory is not writable. LLMS.txt cannot be generated.', 'llms-txt-generator'); ?></p>
-                </div>
-            <?php endif; ?>
-            
-            <div class="llms-txt-status-box">
-                <h2><?php esc_html_e('LLMS.txt Status', 'llms-txt-generator'); ?></h2>
-                <p>
-                    <strong><?php esc_html_e('Root Directory:', 'llms-txt-generator'); ?></strong>
-                    <?php echo esc_html($this->generator->get_root_path()); ?>
-                    <?php if ($is_writable) : ?>
-                        <span class="llms-txt-status-ok"><?php esc_html_e('(Writable)', 'llms-txt-generator'); ?></span>
-                    <?php else : ?>
-                        <span class="llms-txt-status-error"><?php esc_html_e('(Not Writable)', 'llms-txt-generator'); ?></span>
-                    <?php endif; ?>
-                </p>
-                <p>
-                    <strong><?php esc_html_e('Last Generated:', 'llms-txt-generator'); ?></strong>
-                    <?php if ($last_generated) : ?>
-                        <?php echo esc_html(date_i18n(get_option('date_format') . ' ' . get_option('time_format'), $last_generated)); ?>
-                    <?php else : ?>
-                        <?php esc_html_e('Never', 'llms-txt-generator'); ?>
-                    <?php endif; ?>
-                </p>
-                <p>
-                    <button id="llms-txt-generate-now" class="button button-primary" <?php disabled(!$is_writable); ?>>
-                        <?php esc_html_e('Generate Now', 'llms-txt-generator'); ?>
-                    </button>
-                    <span class="spinner"></span>
-                </p>
-            </div>
-            
-            <form action="options.php" method="post">
-                <?php
-                settings_fields('llms_txt_settings');
-                do_settings_sections('llms-txt-settings');
-                submit_button();
-                ?>
-            </form>
-        </div>
-        <?php
-    }
-
-    /**
-     * Render general section
-     *
-     * @return void
-     */
-    public function render_general_section() {
-        echo '<p>' . esc_html__('Configure which content should be included in the llms.txt file and associated Markdown exports.', 'llms-txt-generator') . '</p>';
-    }
-
-    /**
-     * Render post types field
-     *
-     * @return void
-     */
-    public function render_post_types_field() {
-        $settings = $this->generator->get_settings();
-        $post_types = $settings['post_types'] ?? ['post', 'page'];
         
-        // Get all public post types except attachments
-        $public_post_types = get_post_types(['public' => true], 'objects');
-        
-        // Remove attachment post type
-        if (isset($public_post_types['attachment'])) {
-            unset($public_post_types['attachment']);
+        echo '<div style="background: white; border: 1px solid #ccd0d4; padding: 15px; margin: 20px 0;">';
+        echo '<h2>' . esc_html__('LLMS.txt Status', 'llms-txt-generator') . '</h2>';
+        echo '<p><strong>' . esc_html__('Root Directory:', 'llms-txt-generator') . '</strong> ' . esc_html($this->generator->get_root_path());
+        if ($is_writable) {
+            echo ' <span style="color: green; font-weight: bold;">' . esc_html__('(Writable)', 'llms-txt-generator') . '</span>';
+        } else {
+            echo ' <span style="color: red; font-weight: bold;">' . esc_html__('(Not Writable)', 'llms-txt-generator') . '</span>';
         }
-        
-        foreach ($public_post_types as $post_type) {
-            $checked = in_array($post_type->name, $post_types, true) ? 'checked' : '';
-            ?>
-            <label>
-                <input type="checkbox" name="<?php echo esc_attr(Generator::OPTION_NAME); ?>[post_types][]" 
-                       value="<?php echo esc_attr($post_type->name); ?>" <?php echo $checked; ?>>
-                <?php echo esc_html($post_type->labels->name); ?>
-            </label><br>
-            <?php
+        echo '</p>';
+        echo '<p><strong>' . esc_html__('Last Generated:', 'llms-txt-generator') . '</strong> ';
+        if ($last_generated) {
+            echo esc_html(date_i18n(get_option('date_format') . ' ' . get_option('time_format'), $last_generated));
+        } else {
+            echo esc_html__('Never', 'llms-txt-generator');
         }
-    }
-
-    /**
-     * Render full content field
-     *
-     * @return void
-     */
-    public function render_full_content_field() {
-        $settings = $this->generator->get_settings();
-        $full_content = $settings['full_content'] ?? true;
-        ?>
-        <label>
-            <input type="checkbox" name="<?php echo esc_attr(Generator::OPTION_NAME); ?>[full_content]" 
-                   value="1" <?php checked($full_content, true); ?>>
-            <?php esc_html_e('Include full content (unchecked = excerpt only)', 'llms-txt-generator'); ?>
-        </label>
-        <?php
-    }
-
-    /**
-     * Render days field
-     *
-     * @return void
-     */
-    public function render_days_field() {
-        $settings = $this->generator->get_settings();
-        $days = $settings['days_to_include'] ?? 365;
-        ?>
-        <input type="number" name="<?php echo esc_attr(Generator::OPTION_NAME); ?>[days_to_include]" 
-               value="<?php echo esc_attr($days); ?>" min="0" step="1">
-        <p class="description">
-            <?php esc_html_e('Number of days of content to include (0 = all content)', 'llms-txt-generator'); ?>
-        </p>
-        <?php
-    }
-
-    /**
-     * Render delete field
-     *
-     * @return void
-     */
-    public function render_delete_field() {
-        $settings = $this->generator->get_settings();
-        $delete = $settings['delete_on_uninstall'] ?? false;
-        ?>
-        <label>
-            <input type="checkbox" name="<?php echo esc_attr(Generator::OPTION_NAME); ?>[delete_on_uninstall]" 
-                   value="1" <?php checked($delete, true); ?>>
-            <?php esc_html_e('Delete llms.txt and llms-docs/ directory when plugin is uninstalled', 'llms-txt-generator'); ?>
-        </label>
-        <?php
+        echo '</p>';
+        echo '</div>';
+        
+        echo '</div>'; // Close app container
+        echo '</div>'; // Close wrap
     }
 
     /**
@@ -307,27 +167,63 @@ class Admin {
             return;
         }
         
-        wp_enqueue_style(
-            'llms-txt-admin',
-            LLMS_TXT_GENERATOR_PLUGIN_URL . 'assets/admin.css',
-            [],
-            LLMS_TXT_GENERATOR_VERSION
-        );
+        // Check if we're in development mode (using Vite server)
+        $dev_mode = defined('LLMS_TXT_DEV_MODE') && LLMS_TXT_DEV_MODE;
         
-        wp_enqueue_script(
-            'llms-txt-admin',
-            LLMS_TXT_GENERATOR_PLUGIN_URL . 'assets/admin.js',
-            ['jquery'],
-            LLMS_TXT_GENERATOR_VERSION,
-            true
-        );
+        if ($dev_mode) {
+            // Development mode - load from Vite dev server
+            wp_enqueue_script(
+                'llms-txt-admin-react',
+                'http://localhost:5173/src/main.tsx',
+                [],
+                null,
+                true
+            );
+        } else {
+            // Production mode - directly load built assets without relying on manifest.json
+            
+            // Enqueue CSS
+            wp_enqueue_style(
+                'llms-txt-admin-react',
+                LLMS_TXT_GENERATOR_PLUGIN_URL . 'assets/react-build/css/index.css',
+                [],
+                LLMS_TXT_GENERATOR_VERSION
+            );
+            
+            // Enqueue JS
+            wp_enqueue_script(
+                'llms-txt-admin-react',
+                LLMS_TXT_GENERATOR_PLUGIN_URL . 'assets/react-build/js/index.js',
+                [],
+                LLMS_TXT_GENERATOR_VERSION,
+                true
+            );
+        }
         
-        wp_localize_script('llms-txt-admin', 'llmsTxtAdmin', [
+        // Get all public post types except attachments
+        $public_post_types = get_post_types(['public' => true], 'objects');
+        unset($public_post_types['attachment']);
+        
+        $post_types_for_js = [];
+        foreach ($public_post_types as $post_type) {
+            $post_types_for_js[] = [
+                'name' => $post_type->name,
+                'label' => $post_type->labels->name,
+            ];
+        }
+        
+        // Pass data to JavaScript
+        wp_localize_script('llms-txt-admin-react', 'llmsTxtAdmin', [
             'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('llms_txt_generate_nonce'),
-            'generating' => esc_html__('Generating...', 'llms-txt-generator'),
-            'success' => esc_html__('LLMS.txt generated successfully!', 'llms-txt-generator'),
-            'error' => esc_html__('Error generating LLMS.txt. Please check server permissions.', 'llms-txt-generator'),
+            'nonce' => wp_create_nonce('llms_txt_nonce'),
+            'rootPath' => esc_html($this->generator->get_root_path()),
+            'isWritable' => $this->generator->is_root_writable(),
+            'lastGenerated' => $this->generator->get_last_generated_time() ? 
+                date_i18n(get_option('date_format') . ' ' . get_option('time_format'), $this->generator->get_last_generated_time()) : 
+                null,
+            'settings' => $this->generator->get_settings(),
+            'postTypes' => $post_types_for_js,
+            'pluginUrl' => LLMS_TXT_GENERATOR_PLUGIN_URL,
         ]);
     }
 
@@ -338,7 +234,7 @@ class Admin {
      */
     public function ajax_generate_now() {
         // Check nonce
-        if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'llms_txt_generate_nonce')) {
+        if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'llms_txt_nonce')) {
             wp_send_json_error(['message' => esc_html__('Security check failed.', 'llms-txt-generator')]);
         }
         
@@ -358,6 +254,44 @@ class Admin {
         } else {
             wp_send_json_error([
                 'message' => esc_html__('Error generating LLMS.txt. Please check server permissions.', 'llms-txt-generator'),
+            ]);
+        }
+    }
+    
+    /**
+     * AJAX handler for saving settings
+     *
+     * @return void
+     */
+    public function ajax_save_settings() {
+        // Check nonce
+        if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'llms_txt_nonce')) {
+            wp_send_json_error(['message' => esc_html__('Security check failed.', 'llms-txt-generator')]);
+        }
+        
+        // Check permissions
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(['message' => esc_html__('You do not have permission to perform this action.', 'llms-txt-generator')]);
+        }
+        
+        // Get settings from POST data
+        $settings = isset($_POST['settings']) ? json_decode(stripslashes($_POST['settings']), true) : [];
+        
+        if (empty($settings) || !is_array($settings)) {
+            wp_send_json_error(['message' => esc_html__('Invalid settings data.', 'llms-txt-generator')]);
+        }
+        
+        // Sanitize and save settings
+        $sanitized_settings = $this->sanitize_settings($settings);
+        $result = $this->generator->update_settings($sanitized_settings);
+        
+        if ($result) {
+            wp_send_json_success([
+                'message' => esc_html__('Settings saved successfully.', 'llms-txt-generator'),
+            ]);
+        } else {
+            wp_send_json_error([
+                'message' => esc_html__('Error saving settings.', 'llms-txt-generator'),
             ]);
         }
     }

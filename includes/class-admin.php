@@ -225,8 +225,13 @@ class Admin {
         $settings = $this->generator->get_settings();
         $post_types = $settings['post_types'] ?? ['post', 'page'];
         
-        // Get all public post types
+        // Get all public post types except attachments
         $public_post_types = get_post_types(['public' => true], 'objects');
+        
+        // Remove attachment post type
+        if (isset($public_post_types['attachment'])) {
+            unset($public_post_types['attachment']);
+        }
         
         foreach ($public_post_types as $post_type) {
             $checked = in_array($post_type->name, $post_types, true) ? 'checked' : '';

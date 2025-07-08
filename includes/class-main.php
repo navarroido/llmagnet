@@ -88,6 +88,9 @@ class Main {
         // Post save hook to regenerate files
         add_action('save_post', [$this->generator, 'maybe_regenerate'], 10, 2);
         
+        // Post update hook to regenerate files
+        add_action('post_updated', [$this->generator, 'maybe_regenerate'], 10, 2);
+        
         // Register WP-CLI commands if available
         if (defined('WP_CLI') && WP_CLI) {
             $this->register_cli_commands();

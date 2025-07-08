@@ -97,27 +97,26 @@ class Generator {
     public function maybe_regenerate($post_id, $post) {
         // Skip if this is an autosave or revision
         if (wp_is_post_autosave($post_id) || wp_is_post_revision($post_id)) {
+            error_log('LLMS.txt: Skipping regeneration - post is autosave or revision');
             return;
         }
 
         // Skip if post is not published
         if ('publish' !== $post->post_status) {
+            error_log('LLMS.txt: Skipping regeneration - post status is not published: ' . $post->post_status);
             return;
         }
 
         // Check if post type is included in settings
         $settings = $this->get_settings();
         if (!in_array($post->post_type, $settings['post_types'], true)) {
+            error_log('LLMS.txt: Skipping regeneration - post type not included: ' . $post->post_type);
             return;
         }
 
-        // Check if we've generated recently (within 30 minutes)
-        $last_run = get_transient(self::TRANSIENT_NAME);
-        if (false !== $last_run && (time() - $last_run) < 1800) {
-            return;
-        }
-
-        // Regenerate files
+        error_log('LLMS.txt: Regenerating files for post ID: ' . $post_id . ', type: ' . $post->post_type);
+        
+        // Regenerate files immediately without checking the cooldown period
         $this->generate_all();
     }
 
@@ -127,12 +126,15 @@ class Generator {
      * @return bool
      */
     public function generate_all() {
-        // Set transient to prevent frequent regeneration
-        set_transient(self::TRANSIENT_NAME, time(), 1800);
+        error_log('LLMS.txt: Starting file generation');
+        
+        // Set transient to track last generation time (for informational purposes only)
+        set_transient(self::TRANSIENT_NAME, time(), DAY_IN_SECONDS);
 
         // Initialize WordPress filesystem
         global $wp_filesystem;
         if (!$this->init_filesystem()) {
+            error_log('LLMS.txt: Failed to initialize filesystem');
             return false;
         }
 
@@ -142,11 +144,17 @@ class Generator {
         // Generate llms.txt file
         $llms_txt_content = $this->generate_llms_txt_content();
         $llms_txt_path = $this->get_root_path() . 'llms.txt';
-        $wp_filesystem->put_contents($llms_txt_path, $llms_txt_content, FS_CHMOD_FILE);
+        $result = $wp_filesystem->put_contents($llms_txt_path, $llms_txt_content, FS_CHMOD_FILE);
+        
+        if (false === $result) {
+            error_log('LLMS.txt: Failed to write to llms.txt file');
+            return false;
+        }
 
         // Generate Markdown files
         $this->generate_markdown_files();
-
+        
+        error_log('LLMS.txt: File generation completed successfully');
         return true;
     }
 
@@ -227,11 +235,6 @@ class Generator {
         // Add key sections
         $content .= "# Key sections\n";
         
-        // Get all public pages
-        $pages = get_pages([
-            'sort_column' => 'menu_order',
-        ]);
-        
         // Add home page
         $content .= "- /   — " . get_bloginfo('name') . "\n";
         
@@ -242,16 +245,66 @@ class Generator {
             $content .= "- " . str_replace(home_url(), '', get_permalink($blog_page_id)) . "   — " . $blog_page->post_title . "\n";
         }
         
-        // Add important pages (up to 5)
-        $count = 0;
+        // Get settings to determine which post types to include
+        $settings = $this->get_settings();
+        $post_types = $settings['post_types'];
+        
+        // Add important pages and posts from all selected post types
+        $added_items = 0;
+        $max_items = 15; // Increase the limit to accommodate more content types
+        
+        // First add top-level pages (for backward compatibility)
+        $pages = get_pages([
+            'sort_column' => 'menu_order',
+            'parent' => 0,
+        ]);
+        
         foreach ($pages as $page) {
-            if ($count >= 5) {
+            if ($added_items >= $max_items) {
                 break;
             }
             
             if ($page->ID != $blog_page_id && $page->post_parent == 0) {
                 $content .= "- " . str_replace(home_url(), '', get_permalink($page->ID)) . "   — " . $page->post_title . "\n";
-                $count++;
+                $added_items++;
+            }
+        }
+        
+        // Now add posts from each selected post type (except 'page' which we already handled)
+        foreach ($post_types as $post_type) {
+            if ($post_type === 'page') {
+                continue; // Skip pages as we've already added them
+            }
+            
+            // Get post type object to display its label
+            $post_type_obj = get_post_type_object($post_type);
+            if (!$post_type_obj) {
+                continue;
+            }
+            
+            // Add post type header
+            $content .= "\n## " . $post_type_obj->labels->name . "\n";
+            
+            // Get recent posts of this type
+            $posts = get_posts([
+                'post_type' => $post_type,
+                'posts_per_page' => 5,
+                'orderby' => 'date',
+                'order' => 'DESC',
+            ]);
+            
+            if (empty($posts)) {
+                $content .= "- No published content\n";
+                continue;
+            }
+            
+            foreach ($posts as $post) {
+                if ($added_items >= $max_items) {
+                    break 2; // Break out of both loops if we've reached the limit
+                }
+                
+                $content .= "- " . str_replace(home_url(), '', get_permalink($post->ID)) . "   — " . $post->post_title . "\n";
+                $added_items++;
             }
         }
         
@@ -294,8 +347,15 @@ class Generator {
      */
     public function get_posts_to_export() {
         $settings = $this->get_settings();
+        
+        // Ensure attachments are not included
+        $post_types = $settings['post_types'];
+        if (is_array($post_types)) {
+            $post_types = array_diff($post_types, ['attachment']);
+        }
+        
         $args = [
-            'post_type' => $settings['post_types'],
+            'post_type' => $post_types,
             'post_status' => 'publish',
             'posts_per_page' => -1,
         ];

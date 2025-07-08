@@ -45,17 +45,6 @@ class CLI {
      * @return void
      */
     public function regenerate($args, $assoc_args) {
-        $force = isset($assoc_args['force']);
-        
-        // Check if recently generated and not forcing
-        if (!$force) {
-            $last_run = $this->generator->get_last_generated_time();
-            if (false !== $last_run && (time() - $last_run) < 1800) {
-                \WP_CLI::warning('LLMS.txt was generated less than 30 minutes ago. Use --force to regenerate anyway.');
-                return;
-            }
-        }
-        
         // Check if root is writable
         if (!$this->generator->is_root_writable()) {
             \WP_CLI::error('WordPress root directory is not writable. Cannot generate LLMS.txt.');

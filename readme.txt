@@ -1,5 +1,5 @@
 === LLMS.txt Generator ===
-Contributors: wordpressdeveloper
+Contributors: navarroido, benwpco
 Tags: llm, ai, crawling, markdown, seo
 Requires at least: 6.0
 Tested up to: 6.4

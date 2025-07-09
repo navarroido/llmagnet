@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Toast, ToastDescription, ToastProvider, ToastTitle, ToastViewport } from '@/components/ui/toast';
+import { RefreshCw, CheckCircle, FolderOpen, Clock } from "lucide-react";
 
 interface StatusBoxProps {
   rootPath: string;
@@ -59,36 +60,55 @@ export function StatusBox({ rootPath, isWritable, lastGenerated, onGenerateNow }
   return (
     <>
       <div className="bg-white border border-gray-200 shadow-sm p-4 mb-6 rounded-md">
-        <h2 className="text-lg font-medium mb-4">LLMS.txt Status</h2>
-        <div className="space-y-2 mb-4">
-          <p>
-            <strong>Root Directory:</strong> {rootPath}
-            {isWritable ? (
-              <span className="ml-2 text-green-600 font-medium">(Writable)</span>
-            ) : (
-              <span className="ml-2 text-red-600 font-medium">(Not Writable)</span>
-            )}
-          </p>
-          <p>
-            <strong>Last Generated:</strong> {lastGeneratedTime || 'Never'}
-          </p>
+        <div className="pb-3 border-b mb-4">
+          <h2 className="text-lg font-medium flex items-center gap-2">
+            <CheckCircle className="h-5 w-5 text-green-500" />
+            LLMS.txt Status
+          </h2>
         </div>
-        <div className="flex items-center">
+        
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 text-sm">
+                <FolderOpen className="h-4 w-4 text-gray-500" />
+                <span className="font-medium">Root Directory:</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <code className="text-xs bg-gray-100 px-2 py-1 rounded truncate max-w-[250px]">{rootPath}</code>
+                <span className={`text-xs px-2 py-1 rounded-full ${isWritable ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                  {isWritable ? "Writable" : "Not Writable"}
+                </span>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 text-sm">
+                <Clock className="h-4 w-4 text-gray-500" />
+                <span className="font-medium">Last Generated:</span>
+              </div>
+              <p className="text-sm text-gray-600">{lastGeneratedTime || 'Never'}</p>
+            </div>
+          </div>
+
           <Button 
-            variant="wp-primary"
+            variant="gradient"
             disabled={!isWritable || isGenerating}
             onClick={handleGenerateNow}
+            className="w-full md:w-auto"
           >
-            {isGenerating ? 'Generating...' : 'Generate Now'}
+            {isGenerating ? (
+              <>
+                <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+                Generating...
+              </>
+            ) : (
+              <>
+                <RefreshCw className="mr-2 h-4 w-4" />
+                Generate Now
+              </>
+            )}
           </Button>
-          {isGenerating && (
-            <div className="ml-3">
-              <svg className="animate-spin h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-            </div>
-          )}
         </div>
       </div>
 

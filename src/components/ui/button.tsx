@@ -21,6 +21,8 @@ const buttonVariants = cva(
         // WordPress admin style buttons
         "wp-primary": "bg-[#2271b1] text-white hover:bg-[#135e96] border border-[#2271b1]",
         "wp-secondary": "bg-[#f6f7f7] text-[#2c3338] hover:bg-[#f0f0f1] border border-[#2c3338]",
+        // Gradient button
+        "gradient": "bg-gradient-to-r from-[#bc357d] to-[#661f45] text-white hover:opacity-90 border-none",
       },
       size: {
         default: "h-10 px-4 py-2",

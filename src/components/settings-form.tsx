@@ -119,7 +119,7 @@ export function SettingsForm({ settings, postTypes, onSubmit }: SettingsFormProp
         </div>
       </div>
       
-      <Button type="submit" variant="wp-primary">Save Changes</Button>
+      <Button type="submit" variant="gradient">Save Changes</Button>
     </form>
   );
 } 

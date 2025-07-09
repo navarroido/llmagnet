@@ -27,7 +27,7 @@ export function AdminBar() {
           onClick={(e) => {
             e.preventDefault();
             // You can replace this with actual support functionality
-            window.open('https://example.com/support', '_blank');
+            window.open('https://llmagnet.com', '_blank');
           }}
         >
           Support

@@ -28,12 +28,12 @@ This plugin uses a modern React frontend with Vite, TypeScript, and Shadcn UI.
 1. Clone the repository to your WordPress plugins directory:
    ```
    cd wp-content/plugins/
-   git clone https://github.com/yourusername/llms-txt-generator.git
+   git clone https://github.com/yourusername/llmagnet-generate-llm-txt-for-wp.git
    ```
 
 2. Install dependencies:
    ```
-   cd llms-txt-generator
+   cd llmagnet-generate-llm-txt-for-wp
    npm install
    ```
 

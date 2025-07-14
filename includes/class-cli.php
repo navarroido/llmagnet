@@ -97,6 +97,6 @@ class CLI {
         
         // Last generated
         $last_generated = $this->generator->get_last_generated_time();
-        \WP_CLI::log('Last Generated: ' . ($last_generated ? date('Y-m-d H:i:s', $last_generated) : 'Never'));
+        \WP_CLI::log('Last Generated: ' . ($last_generated ? gmdate('Y-m-d H:i:s', $last_generated) : 'Never'));
     }
 } 

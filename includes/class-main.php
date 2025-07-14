@@ -55,7 +55,7 @@ class Main {
      */
     public function load_plugin_textdomain() {
         load_plugin_textdomain(
-            'llms-txt-generator',
+            'llmagnet-generate-llm-txt-for-wp',
             false,
             dirname(LLMS_TXT_GENERATOR_PLUGIN_BASENAME) . '/languages/'
         );

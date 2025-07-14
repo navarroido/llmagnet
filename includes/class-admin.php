@@ -60,8 +60,8 @@ class Admin {
      */
     public function add_settings_page() {
         add_options_page(
-            esc_html__('LLMS.txt Settings', 'llms-txt-generator'),
-            esc_html__('LLMS.txt', 'llms-txt-generator'),
+            esc_html__('LLMS.txt Settings', 'llmagnet-generate-llm-txt-for-wp'),
+            esc_html__('LLMS.txt', 'llmagnet-generate-llm-txt-for-wp'),
             'manage_options',
             'llms-txt-settings',
             [$this, 'render_settings_page']
@@ -126,28 +126,28 @@ class Admin {
         echo '<div id="llms-txt-app" style="min-height: 500px;">';
         
         // Fallback content that will be replaced by React if it loads successfully
-        echo '<h1>' . esc_html__('LLMS.txt Settings', 'llms-txt-generator') . '</h1>';
-        echo '<p>' . esc_html__('Loading application...', 'llms-txt-generator') . '</p>';
-        echo '<p>' . esc_html__('If this message persists, there may be an issue with the JavaScript application. Please check your browser console for errors.', 'llms-txt-generator') . '</p>';
+        echo '<h1>' . esc_html__('LLMS.txt Settings', 'llmagnet-generate-llm-txt-for-wp') . '</h1>';
+        echo '<p>' . esc_html__('Loading application...', 'llmagnet-generate-llm-txt-for-wp') . '</p>';
+        echo '<p>' . esc_html__('If this message persists, there may be an issue with the JavaScript application. Please check your browser console for errors.', 'llmagnet-generate-llm-txt-for-wp') . '</p>';
         
         // Add a simple status box as fallback
         $is_writable = $this->generator->is_root_writable();
         $last_generated = $this->generator->get_last_generated_time();
         
         echo '<div style="background: white; border: 1px solid #ccd0d4; padding: 15px; margin: 20px 0;">';
-        echo '<h2>' . esc_html__('LLMS.txt Status', 'llms-txt-generator') . '</h2>';
-        echo '<p><strong>' . esc_html__('Root Directory:', 'llms-txt-generator') . '</strong> ' . esc_html($this->generator->get_root_path());
+        echo '<h2>' . esc_html__('LLMS.txt Status', 'llmagnet-generate-llm-txt-for-wp') . '</h2>';
+        echo '<p><strong>' . esc_html__('Root Directory:', 'llmagnet-generate-llm-txt-for-wp') . '</strong> ' . esc_html($this->generator->get_root_path());
         if ($is_writable) {
-            echo ' <span style="color: green; font-weight: bold;">' . esc_html__('(Writable)', 'llms-txt-generator') . '</span>';
+            echo ' <span style="color: green; font-weight: bold;">' . esc_html__('(Writable)', 'llmagnet-generate-llm-txt-for-wp') . '</span>';
         } else {
-            echo ' <span style="color: red; font-weight: bold;">' . esc_html__('(Not Writable)', 'llms-txt-generator') . '</span>';
+            echo ' <span style="color: red; font-weight: bold;">' . esc_html__('(Not Writable)', 'llmagnet-generate-llm-txt-for-wp') . '</span>';
         }
         echo '</p>';
-        echo '<p><strong>' . esc_html__('Last Generated:', 'llms-txt-generator') . '</strong> ';
+        echo '<p><strong>' . esc_html__('Last Generated:', 'llmagnet-generate-llm-txt-for-wp') . '</strong> ';
         if ($last_generated) {
             echo esc_html(date_i18n(get_option('date_format') . ' ' . get_option('time_format'), $last_generated));
         } else {
-            echo esc_html__('Never', 'llms-txt-generator');
+            echo esc_html__('Never', 'llmagnet-generate-llm-txt-for-wp');
         }
         echo '</p>';
         echo '</div>';
@@ -234,13 +234,13 @@ class Admin {
      */
     public function ajax_generate_now() {
         // Check nonce
-        if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'llms_txt_nonce')) {
-            wp_send_json_error(['message' => esc_html__('Security check failed.', 'llms-txt-generator')]);
+        if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'llms_txt_nonce')) {
+            wp_send_json_error(['message' => esc_html__('Security check failed.', 'llmagnet-generate-llm-txt-for-wp')]);
         }
         
         // Check permissions
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(['message' => esc_html__('You do not have permission to perform this action.', 'llms-txt-generator')]);
+            wp_send_json_error(['message' => esc_html__('You do not have permission to perform this action.', 'llmagnet-generate-llm-txt-for-wp')]);
         }
         
         // Generate files
@@ -248,12 +248,12 @@ class Admin {
         
         if ($result) {
             wp_send_json_success([
-                'message' => esc_html__('LLMS.txt generated successfully!', 'llms-txt-generator'),
+                'message' => esc_html__('LLMS.txt generated successfully!', 'llmagnet-generate-llm-txt-for-wp'),
                 'timestamp' => date_i18n(get_option('date_format') . ' ' . get_option('time_format'), time()),
             ]);
         } else {
             wp_send_json_error([
-                'message' => esc_html__('Error generating LLMS.txt. Please check server permissions.', 'llms-txt-generator'),
+                'message' => esc_html__('Error generating LLMS.txt. Please check server permissions.', 'llmagnet-generate-llm-txt-for-wp'),
             ]);
         }
     }
@@ -265,20 +265,20 @@ class Admin {
      */
     public function ajax_save_settings() {
         // Check nonce
-        if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'llms_txt_nonce')) {
-            wp_send_json_error(['message' => esc_html__('Security check failed.', 'llms-txt-generator')]);
+        if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'llms_txt_nonce')) {
+            wp_send_json_error(['message' => esc_html__('Security check failed.', 'llmagnet-generate-llm-txt-for-wp')]);
         }
         
         // Check permissions
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(['message' => esc_html__('You do not have permission to perform this action.', 'llms-txt-generator')]);
+            wp_send_json_error(['message' => esc_html__('You do not have permission to perform this action.', 'llmagnet-generate-llm-txt-for-wp')]);
         }
         
         // Get settings from POST data
-        $settings = isset($_POST['settings']) ? json_decode(stripslashes($_POST['settings']), true) : [];
+        $settings = isset($_POST['settings']) ? json_decode(sanitize_textarea_field(wp_unslash($_POST['settings'])), true) : [];
         
         if (empty($settings) || !is_array($settings)) {
-            wp_send_json_error(['message' => esc_html__('Invalid settings data.', 'llms-txt-generator')]);
+            wp_send_json_error(['message' => esc_html__('Invalid settings data.', 'llmagnet-generate-llm-txt-for-wp')]);
         }
         
         // Sanitize and save settings
@@ -287,11 +287,11 @@ class Admin {
         
         if ($result) {
             wp_send_json_success([
-                'message' => esc_html__('Settings saved successfully.', 'llms-txt-generator'),
+                'message' => esc_html__('Settings saved successfully.', 'llmagnet-generate-llm-txt-for-wp'),
             ]);
         } else {
             wp_send_json_error([
-                'message' => esc_html__('Error saving settings.', 'llms-txt-generator'),
+                'message' => esc_html__('Error saving settings.', 'llmagnet-generate-llm-txt-for-wp'),
             ]);
         }
     }
@@ -302,8 +302,9 @@ class Admin {
      * @return void
      */
     public function admin_notices() {
-        // Check if root directory is writable
-        if (!$this->generator->is_root_writable() && isset($_GET['page']) && 'llms-txt-settings' === $_GET['page']) {
+        // Check if root directory is writable and we're on the settings page
+        $current_screen = get_current_screen();
+        if (!$this->generator->is_root_writable() && $current_screen && 'settings_page_llms-txt-settings' === $current_screen->id) {
             ?>
             <div class="notice notice-error">
                 <p>
@@ -311,7 +312,7 @@ class Admin {
                     echo wp_kses(
                         sprintf(
                             /* translators: %s: WordPress root directory path */
-                            __('LLMS.txt Generator cannot write to your WordPress root directory (%s). Please check file permissions.', 'llms-txt-generator'),
+                            __('LLMS.txt Generator cannot write to your WordPress root directory (%s). Please check file permissions.', 'llmagnet-generate-llm-txt-for-wp'),
                             '<code>' . esc_html($this->generator->get_root_path()) . '</code>'
                         ),
                         [

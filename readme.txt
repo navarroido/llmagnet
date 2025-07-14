@@ -1,10 +1,10 @@
-=== LLMS.txt Generator ===
+=== LLMagnet LLM.txt Generator ===
 Contributors: navarroido, benwpco
 Tags: llm, ai, crawling, markdown, seo
 Requires at least: 6.0
-Tested up to: 6.4
+Tested up to: 6.8
 Stable tag: 1.0.0
-Requires PHP: 7.4
+Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,7 +34,7 @@ As large language models become more prevalent, having a standardized way for th
 
 == Installation ==
 
-1. Upload the `llms-txt-generator` folder to the `/wp-content/plugins/` directory
+1. Upload the `llmagnet-generate-llm-txt-for-wp` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Go to Settings > LLMS.txt to configure which content should be included
 

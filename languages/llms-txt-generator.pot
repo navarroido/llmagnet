@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: LLMS.txt Generator 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/llms-txt-generator\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/llmagnet-generate-llm-txt-for-wp\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -12,14 +12,14 @@ msgstr ""
 "POT-Creation-Date: 2023-01-01T12:00:00+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
-"X-Domain: llms-txt-generator\n"
+"X-Domain: llmagnet-generate-llm-txt-for-wp\n"
 
 #. Plugin Name of the plugin
 msgid "LLMS.txt Generator"
 msgstr ""
 
 #. Plugin URI of the plugin
-msgid "https://wordpress.org/plugins/llms-txt-generator/"
+msgid "https://wordpress.org/plugins/llmagnet-generate-llm-txt-for-wp/"
 msgstr ""
 
 #. Description of the plugin

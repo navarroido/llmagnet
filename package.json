@@ -1,5 +1,5 @@
 {
-  "name": "llms-txt-generator",
+  "name": "llmagnet-generate-llm-txt-for-wp",
   "version": "1.0.0",
   "description": "LLMS.txt Generator WordPress Plugin",
   "scripts": {

@@ -16,7 +16,7 @@
  * Requires PHP:      8.0
  * Author:            LLLMagnet
  * Author URI:        https://lllmagnet.com
- * Text Domain:       llms-txt-generator
+ * Text Domain:       llmagnet-generate-llm-txt-for-wp
  * License:           GPL v2 or later
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  */
@@ -35,16 +35,7 @@ define('LLMS_TXT_GENERATOR_PLUGIN_BASENAME', plugin_basename(__FILE__));
 // Development mode - set to true when developing with Vite
 define('LLMS_TXT_DEV_MODE', false);
 
-// Enable error reporting for debugging
-if (!function_exists('llms_txt_error_handler')) {
-    function llms_txt_error_handler($errno, $errstr, $errfile, $errline) {
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log("LLMS.txt Generator Error: [$errno] $errstr in $errfile on line $errline");
-        }
-        return false; // Let PHP handle the error as well
-    }
-}
-set_error_handler('llms_txt_error_handler', E_ALL);
+// Custom error handling removed for production compliance
 
 /**
  * Simple autoloader for plugin classes
@@ -80,7 +71,7 @@ spl_autoload_register(function ($class) {
         if (file_exists($file_alt)) {
             require $file_alt;
         } else {
-            error_log("LLMS.txt Generator: Could not load file $file for class $class");
+            // File not found - handled silently in production
         }
     }
 });
@@ -128,7 +119,7 @@ function llms_txt_generator_init() {
         $plugin = new LLMS_Txt_Generator\Main();
         $plugin->init();
     } catch (Exception $e) {
-        error_log('LLMS.txt Generator Error: ' . $e->getMessage());
+        // Error handled via admin notices and plugin deactivation
         
         if (!function_exists('deactivate_plugins')) {
             require_once ABSPATH . 'wp-admin/includes/plugin.php';
@@ -148,7 +139,6 @@ register_activation_hook(__FILE__, function() {
     try {
         LLMS_Txt_Generator\Generator::activate();
     } catch (Exception $e) {
-        error_log('LLMS.txt Generator Activation Error: ' . $e->getMessage());
         wp_die('Error activating LLMS.txt Generator: ' . esc_html($e->getMessage()));
     }
 });

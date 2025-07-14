@@ -97,24 +97,21 @@ class Generator {
     public function maybe_regenerate($post_id, $post) {
         // Skip if this is an autosave or revision
         if (wp_is_post_autosave($post_id) || wp_is_post_revision($post_id)) {
-            error_log('LLMS.txt: Skipping regeneration - post is autosave or revision');
             return;
         }
 
         // Skip if post is not published
         if ('publish' !== $post->post_status) {
-            error_log('LLMS.txt: Skipping regeneration - post status is not published: ' . $post->post_status);
             return;
         }
 
         // Check if post type is included in settings
         $settings = $this->get_settings();
         if (!in_array($post->post_type, $settings['post_types'], true)) {
-            error_log('LLMS.txt: Skipping regeneration - post type not included: ' . $post->post_type);
             return;
         }
 
-        error_log('LLMS.txt: Regenerating files for post ID: ' . $post_id . ', type: ' . $post->post_type);
+        // Regenerating files for post
         
         // Regenerate files immediately without checking the cooldown period
         $this->generate_all();
@@ -126,7 +123,7 @@ class Generator {
      * @return bool
      */
     public function generate_all() {
-        error_log('LLMS.txt: Starting file generation');
+        // Starting file generation
         
         // Set transient to track last generation time (for informational purposes only)
         set_transient(self::TRANSIENT_NAME, time(), DAY_IN_SECONDS);
@@ -134,7 +131,6 @@ class Generator {
         // Initialize WordPress filesystem
         global $wp_filesystem;
         if (!$this->init_filesystem()) {
-            error_log('LLMS.txt: Failed to initialize filesystem');
             return false;
         }
 
@@ -147,14 +143,12 @@ class Generator {
         $result = $wp_filesystem->put_contents($llms_txt_path, $llms_txt_content, FS_CHMOD_FILE);
         
         if (false === $result) {
-            error_log('LLMS.txt: Failed to write to llms.txt file');
             return false;
         }
 
         // Generate Markdown files
         $this->generate_markdown_files();
         
-        error_log('LLMS.txt: File generation completed successfully');
         return true;
     }
 
@@ -363,7 +357,7 @@ class Generator {
         // Add date filter if set
         if (!empty($settings['days_to_include']) && $settings['days_to_include'] > 0) {
             $args['date_query'] = [
-                'after' => date('Y-m-d', strtotime('-' . $settings['days_to_include'] . ' days')),
+                'after' => gmdate('Y-m-d', strtotime('-' . $settings['days_to_include'] . ' days')),
             ];
         }
         
@@ -477,7 +471,7 @@ class Generator {
         $content = preg_replace('/<br[^>]*>/i', "\n", $content);
         
         // Strip remaining HTML tags
-        $content = strip_tags($content);
+        $content = wp_strip_all_tags($content);
         
         // Clean up whitespace
         $content = preg_replace('/\n\s+\n/', "\n\n", $content);

@@ -3,23 +3,22 @@
  * LLMS.txt Generator
  *
  * @package           LLMS_Txt_Generator
- * @author            WordPress Developer
+ * @author            LLLMagnet
  * @copyright         2023
  * @license           GPL-2.0-or-later
  *
  * @wordpress-plugin
- * Plugin Name:       LLMS.txt Generator
- * Plugin URI:        https://wordpress.org/plugins/llms-txt-generator/
+ * Plugin Name:       LLMagnet LLM.txt Generator
+ * Plugin URI:        https://lllmagnet.com
  * Description:       Automatically creates and maintains an llms.txt file and associated Markdown files for LLM crawlers.
  * Version:           1.0.0
  * Requires at least: 6.0
- * Requires PHP:      7.4
- * Author:            WordPress Developer
- * Author URI:        https://example.com
+ * Requires PHP:      8.0
+ * Author:            LLLMagnet
+ * Author URI:        https://lllmagnet.com
  * Text Domain:       llms-txt-generator
  * License:           GPL v2 or later
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Update URI:        https://example.com/my-plugin/
  */
 
 // If this file is called directly, abort.

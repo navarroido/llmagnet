@@ -1,9 +1,9 @@
-=== LLMagnet LLM.txt Generator ===
+=== LLMS.txt Generators ===
 Contributors: navarroido, benwpco
 Tags: llm, ai, crawling, markdown, seo
 Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -12,7 +12,7 @@ Automatically creates and maintains an llms.txt file and associated Markdown fil
 
 == Description ==
 
-LLMS.txt Generator automatically creates and keeps up-to-date an `llms.txt` file in your site's root directory, along with clean Markdown exports of your content. This helps large language models (LLMs) better understand your website's content structure.
+LLMS.txt Generators automatically creates and keeps up-to-date an `llms.txt` file in your site's root directory, along with clean Markdown exports of your content. This helps large language models (LLMs) better understand your website's content structure.
 
 = Key Features =
 

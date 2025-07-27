@@ -38,9 +38,6 @@ class Main {
      * @return void
      */
     public function init() {
-        // Load plugin text domain
-        add_action('init', [$this, 'load_plugin_textdomain']);
-
         // Initialize components
         $this->init_components();
 
@@ -48,18 +45,7 @@ class Main {
         $this->setup_hooks();
     }
 
-    /**
-     * Load the plugin text domain for translation
-     *
-     * @return void
-     */
-    public function load_plugin_textdomain() {
-        load_plugin_textdomain(
-            'llmagnet-generate-llm-txt-for-wp',
-            false,
-            dirname(LLMS_TXT_GENERATOR_PLUGIN_BASENAME) . '/languages/'
-        );
-    }
+
 
     /**
      * Initialize plugin components

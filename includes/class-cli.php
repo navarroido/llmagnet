@@ -2,10 +2,10 @@
 /**
  * CLI class
  *
- * @package LLMS_Txt_Generator
+ * @package LLMagnet_AI_SEO_Optimizer
  */
 
-namespace LLMS_Txt_Generator;
+namespace LLMagnet_AI_SEO_Optimizer;
 
 /**
  * CLI class for WP-CLI commands
@@ -76,7 +76,7 @@ class CLI {
     public function settings($args, $assoc_args) {
         $settings = $this->generator->get_settings();
         
-        \WP_CLI::log('LLMS.txt Generator Settings:');
+        \WP_CLI::log('LLMagnet AI SEO Optimizer Settings:');
         \WP_CLI::log('');
         
         // Post types

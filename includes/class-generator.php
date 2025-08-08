@@ -2,10 +2,10 @@
 /**
  * Generator class
  *
- * @package LLMS_Txt_Generator
+ * @package LLMagnet_AI_SEO_Optimizer
  */
 
-namespace LLMS_Txt_Generator;
+namespace LLMagnet_AI_SEO_Optimizer;
 
 /**
  * Generator class for creating and updating llms.txt and Markdown files
@@ -16,14 +16,14 @@ class Generator {
      *
      * @var string
      */
-    const OPTION_NAME = 'llms_txt_generator_settings';
+    const OPTION_NAME = 'llmagnet_ai_seo_optimizer_settings';
 
     /**
      * Transient name for tracking last generation time
      *
      * @var string
      */
-    const TRANSIENT_NAME = 'llms_txt_generator_last_run';
+    const TRANSIENT_NAME = 'llmagnet_ai_seo_optimizer_last_run';
 
     /**
      * Default settings
@@ -44,8 +44,8 @@ class Generator {
      */
     public static function activate() {
         // Schedule cron job
-        if (!wp_next_scheduled('llms_txt_daily_event')) {
-            wp_schedule_event(time(), 'daily', 'llms_txt_daily_event');
+        if (!wp_next_scheduled('llmagnet_ai_seo_daily_event')) {
+            wp_schedule_event(time(), 'daily', 'llmagnet_ai_seo_daily_event');
         }
 
         // Create initial files
@@ -65,7 +65,7 @@ class Generator {
      */
     public static function deactivate() {
         // Clear scheduled hook
-        wp_clear_scheduled_hook('llms_txt_daily_event');
+        wp_clear_scheduled_hook('llmagnet_ai_seo_daily_event');
     }
 
     /**

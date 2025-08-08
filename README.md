@@ -1,4 +1,4 @@
-# LLMS.txt Generator WordPress Plugin with React UI
+# LLMagnet AI SEO Optimizer (WordPress Plugin with React UI)
 
 This WordPress plugin generates a `llms.txt` file and associated Markdown files for LLM crawlers. The admin interface has been built with React and Shadcn UI for a modern user experience.
 
@@ -28,12 +28,12 @@ This plugin uses a modern React frontend with Vite, TypeScript, and Shadcn UI.
 1. Clone the repository to your WordPress plugins directory:
    ```
    cd wp-content/plugins/
-   git clone https://github.com/yourusername/llmagnet-generate-llm-txt-for-wp.git
+   git clone https://github.com/yourusername/llmagnet-ai-seo-optimizer.git
    ```
 
 2. Install dependencies:
    ```
-   cd llmagnet-generate-llm-txt-for-wp
+   cd llmagnet-ai-seo-optimizer
    npm install
    ```
 

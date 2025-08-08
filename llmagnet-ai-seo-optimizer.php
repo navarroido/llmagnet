@@ -1,22 +1,23 @@
 <?php
 /**
- * LLMS.txt Generator
+ * LLMagnet AI SEO Optimizer
  *
- * @package           LLMS_Txt_Generator
- * @author            LLMagnet
+ * @package           LLMagnet_AI_SEO_Optimizer
+ * @author            Ido Navarro
  * @copyright         2025
  * @license           GPL-2.0-or-later
  *
  * @wordpress-plugin
- * Plugin Name:       LLMS.txt Generators
+ * Plugin Name:       LLMagnet AI SEO Optimizer
  * Plugin URI:        https://llmagnet.com
  * Description:       Automatically creates and maintains an llms.txt file and associated Markdown files for LLM crawlers.
  * Version:           1.0.1
  * Requires at least: 6.0
  * Requires PHP:      8.0
- * Author:            LLMagnet
+ * Author:            Ido Navarro
  * Author URI:        https://spank.co.il
- * Text Domain:       llms-txt-generators
+ * Text Domain:       llmagnet-ai-seo-optimizer
+ * Domain Path:       /languages
  * License:           GPL v2 or later
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  */
@@ -27,13 +28,13 @@ if (!defined('WPINC')) {
 }
 
 // Define plugin constants
-define('LLMS_TXT_GENERATOR_VERSION', '1.0.0');
-define('LLMS_TXT_GENERATOR_PLUGIN_DIR', plugin_dir_path(__FILE__));
-define('LLMS_TXT_GENERATOR_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('LLMS_TXT_GENERATOR_PLUGIN_BASENAME', plugin_basename(__FILE__));
+define('LLMAGNET_AISEO_VERSION', '1.0.0');
+define('LLMAGNET_AISEO_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('LLMAGNET_AISEO_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('LLMAGNET_AISEO_PLUGIN_BASENAME', plugin_basename(__FILE__));
 
 // Development mode - set to true when developing with Vite
-define('LLMS_TXT_DEV_MODE', false);
+define('LLMAGNET_AISEO_DEV_MODE', false);
 
 // Custom error handling removed for production compliance
 
@@ -42,10 +43,10 @@ define('LLMS_TXT_DEV_MODE', false);
  */
 spl_autoload_register(function ($class) {
     // Project-specific namespace prefix
-    $prefix = 'LLMS_Txt_Generator\\';
+    $prefix = 'LLMagnet_AI_SEO_Optimizer\\';
 
     // Base directory for the namespace prefix
-    $base_dir = LLMS_TXT_GENERATOR_PLUGIN_DIR . 'includes/';
+    $base_dir = LLMAGNET_AISEO_PLUGIN_DIR . 'includes/';
 
     // Does the class use the namespace prefix?
     $len = strlen($prefix);
@@ -78,11 +79,11 @@ spl_autoload_register(function ($class) {
 
 // Check if all required files exist
 $required_files = [
-    LLMS_TXT_GENERATOR_PLUGIN_DIR . 'includes/class-main.php',
-    LLMS_TXT_GENERATOR_PLUGIN_DIR . 'includes/class-generator.php',
-    LLMS_TXT_GENERATOR_PLUGIN_DIR . 'includes/class-admin.php',
-    LLMS_TXT_GENERATOR_PLUGIN_DIR . 'includes/class-cron.php',
-    LLMS_TXT_GENERATOR_PLUGIN_DIR . 'includes/class-cli.php',
+    LLMAGNET_AISEO_PLUGIN_DIR . 'includes/class-main.php',
+    LLMAGNET_AISEO_PLUGIN_DIR . 'includes/class-generator.php',
+    LLMAGNET_AISEO_PLUGIN_DIR . 'includes/class-admin.php',
+    LLMAGNET_AISEO_PLUGIN_DIR . 'includes/class-cron.php',
+    LLMAGNET_AISEO_PLUGIN_DIR . 'includes/class-cli.php',
 ];
 
 $missing_files = [];
@@ -100,7 +101,7 @@ if (!empty($missing_files)) {
     deactivate_plugins(plugin_basename(__FILE__));
     
     add_action('admin_notices', function() use ($missing_files) {
-        echo '<div class="error"><p><strong>LLMS.txt Generator Error:</strong> The following required files are missing:<br>';
+        echo '<div class="error"><p><strong>LLMagnet AI SEO Optimizer Error:</strong> The following required files are missing:<br>';
         foreach ($missing_files as $file) {
             echo esc_html($file) . '<br>';
         }
@@ -111,12 +112,12 @@ if (!empty($missing_files)) {
 }
 
 // Include the main plugin class
-require_once LLMS_TXT_GENERATOR_PLUGIN_DIR . 'includes/class-main.php';
+require_once LLMAGNET_AISEO_PLUGIN_DIR . 'includes/class-main.php';
 
 // Initialize the plugin
-function llms_txt_generator_init() {
+function llmagnet_ai_seo_init() {
     try {
-        $plugin = new LLMS_Txt_Generator\Main();
+        $plugin = new LLMagnet_AI_SEO_Optimizer\Main();
         $plugin->init();
     } catch (Exception $e) {
         // Error handled via admin notices and plugin deactivation
@@ -128,20 +129,30 @@ function llms_txt_generator_init() {
         deactivate_plugins(plugin_basename(__FILE__));
         
         add_action('admin_notices', function() use ($e) {
-            echo '<div class="error"><p><strong>LLMS.txt Generator Error:</strong> ' . esc_html($e->getMessage()) . '</p></div>';
+            echo '<div class="error"><p><strong>LLMagnet AI SEO Optimizer Error:</strong> ' . esc_html($e->getMessage()) . '</p></div>';
         });
     }
 }
-add_action('plugins_loaded', 'llms_txt_generator_init');
+add_action('plugins_loaded', 'llmagnet_ai_seo_init');
+
+// Load plugin textdomain for translations
+function llmagnet_ai_seo_optimizer_load_textdomain() {
+    load_plugin_textdomain(
+        'llmagnet-ai-seo-optimizer',
+        false,
+        dirname(LLMAGNET_AISEO_PLUGIN_BASENAME) . '/languages'
+    );
+}
+add_action('plugins_loaded', 'llmagnet_ai_seo_optimizer_load_textdomain');
 
 // Register activation hook
 register_activation_hook(__FILE__, function() {
     try {
-        LLMS_Txt_Generator\Generator::activate();
+        LLMagnet_AI_SEO_Optimizer\Generator::activate();
     } catch (Exception $e) {
-        wp_die('Error activating LLMS.txt Generator: ' . esc_html($e->getMessage()));
+        wp_die('Error activating LLMagnet AI SEO Optimizer: ' . esc_html($e->getMessage()));
     }
 });
 
 // Register deactivation hook
-register_deactivation_hook(__FILE__, ['LLMS_Txt_Generator\Generator', 'deactivate']); 
+register_deactivation_hook(__FILE__, ['LLMagnet_AI_SEO_Optimizer\Generator', 'deactivate']); 

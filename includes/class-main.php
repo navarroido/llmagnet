@@ -2,10 +2,10 @@
 /**
  * Main plugin class
  *
- * @package LLMS_Txt_Generator
+ * @package LLMagnet_AI_SEO_Optimizer
  */
 
-namespace LLMS_Txt_Generator;
+namespace LLMagnet_AI_SEO_Optimizer;
 
 /**
  * Main plugin class
@@ -89,6 +89,6 @@ class Main {
      * @return void
      */
     private function register_cli_commands() {
-        \WP_CLI::add_command('llms-txt', new CLI($this->generator));
+        \WP_CLI::add_command('llmagnet-ai-seo', new CLI($this->generator));
     }
 } 

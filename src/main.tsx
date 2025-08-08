@@ -4,7 +4,7 @@ import App from './App';
 import './index.css';
 
 // Add debugging
-console.log('LLMS.txt Generator React app initializing...');
+console.log('LLMagnet AI SEO Optimizer React app initializing...');
 console.log('Looking for element with ID: llms-txt-app');
 
 const rootElement = document.getElementById('llms-txt-app');

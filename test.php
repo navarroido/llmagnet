@@ -40,11 +40,11 @@ foreach ($required_files as $file) {
 
 // Check if classes exist
 $required_classes = [
-    'LLMS_Txt_Generator\Main',
-    'LLMS_Txt_Generator\Generator',
-    'LLMS_Txt_Generator\Admin',
-    'LLMS_Txt_Generator\Cron',
-    'LLMS_Txt_Generator\CLI',
+    'LLMagnet_AI_SEO_Optimizer\Main',
+'LLMagnet_AI_SEO_Optimizer\Generator',
+'LLMagnet_AI_SEO_Optimizer\Admin',
+'LLMagnet_AI_SEO_Optimizer\Cron',
+'LLMagnet_AI_SEO_Optimizer\CLI',
 ];
 
 foreach ($required_classes as $class) {

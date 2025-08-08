@@ -1,7 +1,7 @@
 {
-  "name": "llms-txt-generators",
-  "version": "1.0.0",
-  "description": "LLMS.txt Generator WordPress Plugin",
+  "name": "llmagnet-ai-seo-optimizer",
+  "version": "1.0.1",
+  "description": "LLMagnet AI SEO Optimizer WordPress Plugin",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

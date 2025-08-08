@@ -78,7 +78,7 @@ export default function App() {
   const handleGenerateNow = async () => {
     try {
       const formData = new FormData();
-      formData.append('action', 'llms_txt_generate_now');
+      formData.append('action', 'llmagnet_ai_seo_generate_now');
       formData.append('nonce', window.llmsTxtAdmin.nonce);
 
       const response = await fetch(window.llmsTxtAdmin.ajaxUrl, {
@@ -106,7 +106,7 @@ export default function App() {
   const handleSaveSettings = async (newSettings: any) => {
     try {
       const formData = new FormData();
-      formData.append('action', 'llms_txt_save_settings');
+      formData.append('action', 'llmagnet_ai_seo_save_settings');
       formData.append('nonce', window.llmsTxtAdmin.nonce);
       formData.append('settings', JSON.stringify(newSettings));
 
@@ -154,7 +154,7 @@ export default function App() {
         <div className="flex justify-center mb-6">
           <img 
             src={`${window.llmsTxtAdmin?.pluginUrl || ''}assets/react-build/assets/banner_upgrade.png`} 
-            alt="LLMS.txt Generator" 
+            alt="LLMagnet AI SEO Optimizer" 
             className="max-w-full h-auto"
             onError={(e) => {
               // Fallback if the image doesn't load

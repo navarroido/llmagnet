@@ -1,4 +1,4 @@
-=== LLMS.txt Generators ===
+=== LLMagnet AI SEO Optimizer ===
 Contributors: navarroido, benwpco
 Tags: llm, ai, crawling, markdown, seo
 Requires at least: 6.0
@@ -12,7 +12,7 @@ Automatically creates and maintains an llms.txt file and associated Markdown fil
 
 == Description ==
 
-LLMS.txt Generators automatically creates and keeps up-to-date an `llms.txt` file in your site's root directory, along with clean Markdown exports of your content. This helps large language models (LLMs) better understand your website's content structure.
+LLMagnet AI SEO Optimizer automatically creates and keeps up-to-date an `llms.txt` file in your site's root directory, along with clean Markdown exports of your content. This helps large language models (LLMs) better understand your website's content structure.
 
 = Key Features =
 
@@ -34,7 +34,7 @@ As large language models become more prevalent, having a standardized way for th
 
 == Installation ==
 
-1. Upload the `llmagnet-generate-llm-txt-for-wp` folder to the `/wp-content/plugins/` directory
+1. Upload the `llmagnet-ai-seo-optimizer` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Go to Settings > LLMS.txt to configure which content should be included
 

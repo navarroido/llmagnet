@@ -1,8 +1,8 @@
 <?php
 /**
- * Uninstall LLMS.txt Generator
+ * Uninstall LLMagnet AI SEO Optimizer
  *
- * @package LLMS_Txt_Generator
+ * @package LLMagnet_AI_SEO_Optimizer
  */
 
 // If uninstall not called from WordPress, exit
@@ -11,7 +11,7 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
 }
 
 // Get plugin settings
-$settings = get_option('llms_txt_generator_settings', []);
+$settings = get_option('llmagnet_ai_seo_optimizer_settings', []);
 
 // Delete files if setting is enabled
 if (isset($settings['delete_on_uninstall']) && $settings['delete_on_uninstall']) {
@@ -34,5 +34,5 @@ if (isset($settings['delete_on_uninstall']) && $settings['delete_on_uninstall'])
 }
 
 // Delete plugin options
-delete_option('llms_txt_generator_settings');
-delete_transient('llms_txt_generator_last_run'); 
+delete_option('llmagnet_ai_seo_optimizer_settings');
+delete_transient('llmagnet_ai_seo_optimizer_last_run'); 

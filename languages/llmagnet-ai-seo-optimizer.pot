@@ -1,0 +1,101 @@
+# Copyright (C) 2025
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: LLMagnet AI SEO Optimizer 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/llmagnet-ai-seo-optimizer\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-01-01T12:00:00+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: custom\n"
+"X-Domain: llmagnet-ai-seo-optimizer\n"
+
+#. Plugin Name of the plugin
+msgid "LLMagnet AI SEO Optimizer"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://wordpress.org/plugins/llmagnet-ai-seo-optimizer/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Automatically creates and maintains an llms.txt file and associated Markdown files for LLM crawlers."
+msgstr ""
+
+#. Author of the plugin
+msgid "Ido Navarro"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://spank.co.il"
+msgstr ""
+
+#: includes/class-admin.php:62
+msgid "LLMS.txt Settings"
+msgstr ""
+
+#: includes/class-admin.php:63
+msgid "LLMS.txt"
+msgstr ""
+
+#: includes/class-admin.php:137
+msgid "LLMS.txt Status"
+msgstr ""
+
+#: includes/class-admin.php:138
+msgid "Root Directory:"
+msgstr ""
+
+#: includes/class-admin.php:141
+msgid "(Writable)"
+msgstr ""
+
+#: includes/class-admin.php:143
+msgid "(Not Writable)"
+msgstr ""
+
+#: includes/class-admin.php:146
+msgid "Last Generated:"
+msgstr ""
+
+#: includes/class-admin.php:150
+msgid "Never"
+msgstr ""
+
+#: includes/class-admin.php:251
+msgid "LLMS.txt generated successfully!"
+msgstr ""
+
+#: includes/class-admin.php:256
+msgid "Error generating LLMS.txt. Please check server permissions."
+msgstr ""
+
+#: includes/class-admin.php:238
+#: includes/class-admin.php:269
+msgid "Security check failed."
+msgstr ""
+
+#: includes/class-admin.php:243
+#: includes/class-admin.php:274
+msgid "You do not have permission to perform this action."
+msgstr ""
+
+#: includes/class-admin.php:281
+msgid "Invalid settings data."
+msgstr ""
+
+#: includes/class-admin.php:290
+msgid "Settings saved successfully."
+msgstr ""
+
+#: includes/class-admin.php:294
+msgid "Error saving settings."
+msgstr ""
+
+#: includes/class-admin.php:315
+msgid "LLMS.txt Generator cannot write to your WordPress root directory (%s). Please check file permissions."
+msgstr "" 

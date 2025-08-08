@@ -25,7 +25,7 @@
                 url: llmsTxtAdmin.ajaxUrl,
                 type: 'POST',
                 data: {
-                    action: 'llms_txt_generate_now',
+                    action: 'llmagnet_ai_seo_generate_now',
                     nonce: llmsTxtAdmin.nonce
                 },
                 success: function(response) {

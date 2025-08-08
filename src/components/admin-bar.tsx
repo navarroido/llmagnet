@@ -9,7 +9,7 @@ export function AdminBar() {
       <div className="flex items-center">
         <img 
           src={`${pluginUrl}assets/react-build/assets/fkjogo.svg`}
-          alt="LLMS.txt Generator" 
+          alt="LLMagnet AI SEO Optimizer" 
           className="h-8"
           onError={(e) => {
             // Fallback if the image doesn't load

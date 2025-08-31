@@ -19,7 +19,6 @@ jobs:
 
            - name: Set variables
         id: vars
-        run: |
           # Plugin-specific identifiers (local vars)
           PLUGIN_SLUG="llmagnet-llm-txt-generator"
           MAIN_FILE="llmagnet-ai-seo-optimizer.php"

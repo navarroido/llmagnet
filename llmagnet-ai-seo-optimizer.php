@@ -39,7 +39,7 @@ define('LLMAGNET_AISEO_DEV_MODE', false);
 // Custom error handling removed for production compliance
 
 /**
- * Simple autoloader for plugin classes
+ * Simple autoloader for plugin classes to avoid using composer
  */
 spl_autoload_register(function ($class) {
     // Project-specific namespace prefix

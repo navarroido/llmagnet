@@ -11,7 +11,7 @@
  * Plugin Name:       LLMagnet AI SEO Optimizer
  * Plugin URI:        https://llmagnet.com
  * Description:       Automatically creates and maintains an llms.txt file and associated Markdown files for LLM crawlers.
- * Version:           1.0.1
+ * Version:           1.0.2
  * Requires at least: 6.0
  * Requires PHP:      8.0
  * Author:            Ido Navarro

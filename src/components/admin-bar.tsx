@@ -2,7 +2,7 @@ import React from 'react';
 
 export function AdminBar() {
   // Get the plugin URL from WordPress
-  const pluginUrl = window.llmsTxtAdmin?.pluginUrl || '';
+  const pluginUrl = window.llmagnetLlmsTxtAdmin?.pluginUrl || '';
 
   return (
     <div className="bg-white border-b border-gray-200 shadow-sm py-2 px-4 flex justify-between items-center mb-6">

@@ -22,11 +22,11 @@
             
             // Send AJAX request
             $.ajax({
-                url: llmsTxtAdmin.ajaxUrl,
+                url: window.llmagnetLlmsTxtAdmin.ajaxUrl,
                 type: 'POST',
                 data: {
                     action: 'llmagnet_ai_seo_generate_now',
-                    nonce: llmsTxtAdmin.nonce
+                    nonce: window.llmagnetLlmsTxtAdmin.nonce
                 },
                 success: function(response) {
                     $spinner.removeClass('is-active');
@@ -35,7 +35,7 @@
                     if (response.success) {
                         // Update timestamp display
                         $('strong:contains("Last Generated:")').parent().html(
-                            '<strong>' + llmsTxtAdmin.lastGeneratedLabel + '</strong> ' + response.data.timestamp
+                            '<strong>' + window.llmagnetLlmsTxtAdmin.lastGeneratedLabel + '</strong> ' + response.data.timestamp
                         );
                         
                         // Show success message
@@ -62,7 +62,7 @@
                     
                     // Show error message
                     $container.append(
-                        $('<span class="llms-txt-status-message error"></span>').text(llmsTxtAdmin.error)
+                        $('<span class="llms-txt-status-message error"></span>').text(window.llmagnetLlmsTxtAdmin.error)
                     );
                     
                     // Hide message after 5 seconds

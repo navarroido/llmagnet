@@ -16,7 +16,7 @@
  * Requires PHP:      8.0
  * Author:            Ido Navarro
  * Author URI:        https://spank.co.il
- * Text Domain:       llmagnet-ai-seo-optimizer
+ * Text Domain:       llmagnet-llm-txt-generator
  * Domain Path:       /languages
  * License:           GPL v2 or later
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
@@ -28,7 +28,7 @@ if (!defined('WPINC')) {
 }
 
 // Define plugin constants
-define('LLMAGNET_AISEO_VERSION', '1.0.0');
+define('LLMAGNET_AISEO_VERSION', '1.0.1');
 define('LLMAGNET_AISEO_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('LLMAGNET_AISEO_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('LLMAGNET_AISEO_PLUGIN_BASENAME', plugin_basename(__FILE__));
@@ -135,15 +135,7 @@ function llmagnet_ai_seo_init() {
 }
 add_action('plugins_loaded', 'llmagnet_ai_seo_init');
 
-// Load plugin textdomain for translations
-function llmagnet_ai_seo_optimizer_load_textdomain() {
-    load_plugin_textdomain(
-        'llmagnet-ai-seo-optimizer',
-        false,
-        dirname(LLMAGNET_AISEO_PLUGIN_BASENAME) . '/languages'
-    );
-}
-add_action('plugins_loaded', 'llmagnet_ai_seo_optimizer_load_textdomain');
+// Removed explicit textdomain loading per WP.org recommendation (WP 4.6+ auto-loads language packs)
 
 // Register activation hook
 register_activation_hook(__FILE__, function() {

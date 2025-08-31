@@ -38,6 +38,17 @@ As large language models become more prevalent, having a standardized way for th
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Go to Settings > LLMS.txt to configure which content should be included
 
+== Source code and build ==
+
+This plugin ships compiled frontend assets in `assets/react-build/`. The complete, human-readable source is included under `src/` and can be built locally.
+
+Build steps:
+
+1. Navigate to the plugin directory
+2. Install dependencies: `npm install`
+3. Development server: `npm run dev`
+4. Production build: `npm run build`
+
 == Frequently Asked Questions ==
 
 = What is llms.txt? =
@@ -68,13 +79,17 @@ Yes, you can use the "Generate Now" button on the settings page or the WP-CLI co
 
 == Changelog ==
 
+= 1.0.1 =
+* Add documented source code and build instructions
+* Rename localized JS global to unique prefix
+
 = 1.0.0 =
 * Initial release
 
 == Upgrade Notice ==
 
-= 1.0.0 =
-Initial release
+= 1.0.1 =
+This release documents source and build steps and prefixes the localized JS global for improved compatibility.
 
 == Hooks and Filters ==
 

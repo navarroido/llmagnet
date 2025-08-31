@@ -60,8 +60,8 @@ class Admin {
      */
     public function add_settings_page() {
         add_options_page(
-            esc_html__('LLMS.txt Settings', 'llmagnet-ai-seo-optimizer'),
-            esc_html__('LLMS.txt', 'llmagnet-ai-seo-optimizer'),
+            esc_html__('LLMS.txt Settings', 'llmagnet-llm-txt-generator'),
+            esc_html__('LLMS.txt', 'llmagnet-llm-txt-generator'),
             'manage_options',
             'llmagnet-ai-seo-optimizer',
             [$this, 'render_settings_page']
@@ -126,28 +126,28 @@ class Admin {
         echo '<div id="llms-txt-app" style="min-height: 500px;">';
         
         // Fallback content that will be replaced by React if it loads successfully
-        echo '<h1>' . esc_html__('LLMS.txt Settings', 'llmagnet-ai-seo-optimizer') . '</h1>';
-        echo '<p>' . esc_html__('Loading application...', 'llmagnet-ai-seo-optimizer') . '</p>';
-        echo '<p>' . esc_html__('If this message persists, there may be an issue with the JavaScript application. Please check your browser console for errors.', 'llmagnet-ai-seo-optimizer') . '</p>';
+        echo '<h1>' . esc_html__('LLMS.txt Settings', 'llmagnet-llm-txt-generator') . '</h1>';
+        echo '<p>' . esc_html__('Loading application...', 'llmagnet-llm-txt-generator') . '</p>';
+        echo '<p>' . esc_html__('If this message persists, there may be an issue with the JavaScript application. Please check your browser console for errors.', 'llmagnet-llm-txt-generator') . '</p>';
         
         // Add a simple status box as fallback
         $is_writable = $this->generator->is_root_writable();
         $last_generated = $this->generator->get_last_generated_time();
         
         echo '<div style="background: white; border: 1px solid #ccd0d4; padding: 15px; margin: 20px 0;">';
-        echo '<h2>' . esc_html__('LLMS.txt Status', 'llmagnet-ai-seo-optimizer') . '</h2>';
-        echo '<p><strong>' . esc_html__('Root Directory:', 'llmagnet-ai-seo-optimizer') . '</strong> ' . esc_html($this->generator->get_root_path());
+        echo '<h2>' . esc_html__('LLMS.txt Status', 'llmagnet-llm-txt-generator') . '</h2>';
+        echo '<p><strong>' . esc_html__('Root Directory:', 'llmagnet-llm-txt-generator') . '</strong> ' . esc_html($this->generator->get_root_path());
         if ($is_writable) {
-            echo ' <span style=\"color: green; font-weight: bold;\">' . esc_html__('(Writable)', 'llmagnet-ai-seo-optimizer') . '</span>';
+            echo ' <span style=\"color: green; font-weight: bold;\">' . esc_html__('(Writable)', 'llmagnet-llm-txt-generator') . '</span>';
         } else {
-            echo ' <span style=\"color: red; font-weight: bold;\">' . esc_html__('(Not Writable)', 'llmagnet-ai-seo-optimizer') . '</span>';
+            echo ' <span style=\"color: red; font-weight: bold;\">' . esc_html__('(Not Writable)', 'llmagnet-llm-txt-generator') . '</span>';
         }
         echo '</p>';
-        echo '<p><strong>' . esc_html__('Last Generated:', 'llmagnet-ai-seo-optimizer') . '</strong> ';
+        echo '<p><strong>' . esc_html__('Last Generated:', 'llmagnet-llm-txt-generator') . '</strong> ';
         if ($last_generated) {
             echo esc_html(date_i18n(get_option('date_format') . ' ' . get_option('time_format'), $last_generated));
         } else {
-            echo esc_html__('Never', 'llmagnet-ai-seo-optimizer');
+            echo esc_html__('Never', 'llmagnet-llm-txt-generator');
         }
         echo '</p>';
         echo '</div>';
@@ -213,7 +213,7 @@ class Admin {
         }
         
         // Pass data to JavaScript
-        wp_localize_script('llmagnet-ai-seo-admin', 'llmsTxtAdmin', [
+        wp_localize_script('llmagnet-ai-seo-admin', 'llmagnetLlmsTxtAdmin', [
             'ajaxUrl' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('llmagnet_ai_seo_nonce'),
             'rootPath' => esc_html($this->generator->get_root_path()),
@@ -235,12 +235,12 @@ class Admin {
     public function ajax_generate_now() {
         // Check nonce
         if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'llmagnet_ai_seo_nonce')) {
-            wp_send_json_error(['message' => esc_html__('Security check failed.', 'llmagnet-ai-seo-optimizer')]);
+            wp_send_json_error(['message' => esc_html__('Security check failed.', 'llmagnet-llm-txt-generator')]);
         }
         
         // Check permissions
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(['message' => esc_html__('You do not have permission to perform this action.', 'llmagnet-ai-seo-optimizer')]);
+            wp_send_json_error(['message' => esc_html__('You do not have permission to perform this action.', 'llmagnet-llm-txt-generator')]);
         }
         
         // Generate files
@@ -248,12 +248,12 @@ class Admin {
         
         if ($result) {
             wp_send_json_success([
-                'message' => esc_html__('LLMS.txt generated successfully!', 'llmagnet-ai-seo-optimizer'),
+                'message' => esc_html__('LLMS.txt generated successfully!', 'llmagnet-llm-txt-generator'),
                 'timestamp' => date_i18n(get_option('date_format') . ' ' . get_option('time_format'), time()),
             ]);
         } else {
             wp_send_json_error([
-                'message' => esc_html__('Error generating LLMS.txt. Please check server permissions.', 'llmagnet-ai-seo-optimizer'),
+                'message' => esc_html__('Error generating LLMS.txt. Please check server permissions.', 'llmagnet-llm-txt-generator'),
             ]);
         }
     }
@@ -266,19 +266,19 @@ class Admin {
     public function ajax_save_settings() {
         // Check nonce
         if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'llmagnet_ai_seo_nonce')) {
-            wp_send_json_error(['message' => esc_html__('Security check failed.', 'llmagnet-ai-seo-optimizer')]);
+            wp_send_json_error(['message' => esc_html__('Security check failed.', 'llmagnet-llm-txt-generator')]);
         }
         
         // Check permissions
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(['message' => esc_html__('You do not have permission to perform this action.', 'llmagnet-ai-seo-optimizer')]);
+            wp_send_json_error(['message' => esc_html__('You do not have permission to perform this action.', 'llmagnet-llm-txt-generator')]);
         }
         
         // Get settings from POST data
         $settings = isset($_POST['settings']) ? json_decode(sanitize_textarea_field(wp_unslash($_POST['settings'])), true) : [];
         
         if (empty($settings) || !is_array($settings)) {
-            wp_send_json_error(['message' => esc_html__('Invalid settings data.', 'llmagnet-ai-seo-optimizer')]);
+            wp_send_json_error(['message' => esc_html__('Invalid settings data.', 'llmagnet-llm-txt-generator')]);
         }
         
         // Sanitize and save settings
@@ -287,11 +287,11 @@ class Admin {
         
         if ($result) {
             wp_send_json_success([
-                'message' => esc_html__('Settings saved successfully.', 'llmagnet-ai-seo-optimizer'),
+                'message' => esc_html__('Settings saved successfully.', 'llmagnet-llm-txt-generator'),
             ]);
         } else {
             wp_send_json_error([
-                'message' => esc_html__('Error saving settings.', 'llmagnet-ai-seo-optimizer'),
+                'message' => esc_html__('Error saving settings.', 'llmagnet-llm-txt-generator'),
             ]);
         }
     }
@@ -312,7 +312,7 @@ class Admin {
                     echo wp_kses(
                         sprintf(
                             /* translators: %s: WordPress root directory path */
-                            __('LLMS.txt Generator cannot write to your WordPress root directory (%s). Please check file permissions.', 'llmagnet-ai-seo-optimizer'),
+                            __('LLMS.txt Generator cannot write to your WordPress root directory (%s). Please check file permissions.', 'llmagnet-llm-txt-generator'),
                             '<code>' . esc_html($this->generator->get_root_path()) . '</code>'
                         ),
                         [

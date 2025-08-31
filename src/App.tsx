@@ -5,7 +5,7 @@ import { AdminBar } from './components/admin-bar';
 
 declare global {
   interface Window {
-    llmsTxtAdmin: {
+    llmagnetLlmsTxtAdmin: {
       ajaxUrl: string;
       nonce: string;
       rootPath: string;
@@ -49,22 +49,22 @@ export default function App() {
 
   useEffect(() => {
     console.log('App useEffect running');
-    console.log('Window llmsTxtAdmin:', window.llmsTxtAdmin);
+    console.log('Window llmagnetLlmsTxtAdmin:', window.llmagnetLlmsTxtAdmin);
     
     // Get data from the global window object
     try {
-      if (window.llmsTxtAdmin) {
-        console.log('Found llmsTxtAdmin data:', window.llmsTxtAdmin);
+      if (window.llmagnetLlmsTxtAdmin) {
+        console.log('Found llmagnetLlmsTxtAdmin data:', window.llmagnetLlmsTxtAdmin);
         
         setData({
-          rootPath: window.llmsTxtAdmin.rootPath,
-          isWritable: window.llmsTxtAdmin.isWritable,
-          lastGenerated: window.llmsTxtAdmin.lastGenerated,
-          settings: window.llmsTxtAdmin.settings,
-          postTypes: window.llmsTxtAdmin.postTypes,
+          rootPath: window.llmagnetLlmsTxtAdmin.rootPath,
+          isWritable: window.llmagnetLlmsTxtAdmin.isWritable,
+          lastGenerated: window.llmagnetLlmsTxtAdmin.lastGenerated,
+          settings: window.llmagnetLlmsTxtAdmin.settings,
+          postTypes: window.llmagnetLlmsTxtAdmin.postTypes,
         });
       } else {
-        console.error('llmsTxtAdmin data not found in window object');
+        console.error('llmagnetLlmsTxtAdmin data not found in window object');
         setError('WordPress admin data not found.');
       }
     } catch (err) {
@@ -79,9 +79,9 @@ export default function App() {
     try {
       const formData = new FormData();
       formData.append('action', 'llmagnet_ai_seo_generate_now');
-      formData.append('nonce', window.llmsTxtAdmin.nonce);
+      formData.append('nonce', window.llmagnetLlmsTxtAdmin.nonce);
 
-      const response = await fetch(window.llmsTxtAdmin.ajaxUrl, {
+      const response = await fetch(window.llmagnetLlmsTxtAdmin.ajaxUrl, {
         method: 'POST',
         body: formData,
         credentials: 'same-origin',
@@ -107,10 +107,10 @@ export default function App() {
     try {
       const formData = new FormData();
       formData.append('action', 'llmagnet_ai_seo_save_settings');
-      formData.append('nonce', window.llmsTxtAdmin.nonce);
+      formData.append('nonce', window.llmagnetLlmsTxtAdmin.nonce);
       formData.append('settings', JSON.stringify(newSettings));
 
-      const response = await fetch(window.llmsTxtAdmin.ajaxUrl, {
+      const response = await fetch(window.llmagnetLlmsTxtAdmin.ajaxUrl, {
         method: 'POST',
         body: formData,
         credentials: 'same-origin',
@@ -153,14 +153,14 @@ export default function App() {
       <div className="wrap">
         <div className="flex justify-center mb-6">
           <img 
-            src={`${window.llmsTxtAdmin?.pluginUrl || ''}assets/react-build/assets/banner_upgrade.png`} 
+            src={`${window.llmagnetLlmsTxtAdmin?.pluginUrl || ''}assets/react-build/assets/banner_upgrade.png`} 
             alt="LLMagnet AI SEO Optimizer" 
             className="max-w-full h-auto"
             onError={(e) => {
               // Fallback if the image doesn't load
               const target = e.target as HTMLImageElement;
               target.onerror = null;
-              target.src = `${window.llmsTxtAdmin?.pluginUrl || ''}src/assets/images/banner_upgrade.png`;
+              target.src = `${window.llmagnetLlmsTxtAdmin?.pluginUrl || ''}src/assets/images/banner_upgrade.png`;
               console.log('Trying fallback image path:', target.src);
             }}
           />

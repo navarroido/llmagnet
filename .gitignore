@@ -1,41 +1,21 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# Ignore everything by default
+/*
 
-# Dependencies
-node_modules
-dist
-dist-ssr
-*.local
+# Keep these directories (and their contents)
+!/src/
+!/languages/
+!/examples/
+!/assets/
+!/includes/
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+# Keep these files at repo root
+!/llmagnet-ai-seo-optimizer.php
+!/index.html
+!/readme.txt
+!/uninstall.php
 
-# WordPress specific
-wp-config.php
-wp-content/advanced-cache.php
-wp-content/backup-db/
-wp-content/backups/
-wp-content/blogs.dir/
-wp-content/cache/
-wp-content/upgrade/
-wp-content/uploads/
-wp-content/mu-plugins/
-wp-content/wp-cache-config.php
-wp-content/plugins/hello.php
+# Keep the gitignore itself
+!/.gitignore
 
 # Environment files
 .env

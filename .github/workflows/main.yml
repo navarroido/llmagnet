@@ -54,30 +54,25 @@ jobs:
           SVN_PASSWORD: ${{ secrets.WP_SVN_PASSWORD }}
         run: |
           set -euo pipefail
-
+      
           PLUGIN_SLUG="${{ env.PLUGIN_SLUG }}"
           VERSION="${{ env.VERSION }}"
           SVN_URL="https://plugins.svn.wordpress.org/$PLUGIN_SLUG"
           SVN_DIR="$PLUGIN_SLUG-svn"
-
+      
           echo "SVN URL: $SVN_URL"
           echo "SVN checkout dir: $SVN_DIR"
           echo "Tagging version: $VERSION"
-
-          # Checkout SVN repository
+      
           svn checkout --username "$SVN_USERNAME" --password "$SVN_PASSWORD" "$SVN_URL" "$SVN_DIR" --non-interactive --trust-server-cert
-
-          # Ensure base dirs
           mkdir -p "$SVN_DIR/trunk" "$SVN_DIR/assets" "$SVN_DIR/tags"
-
-          # Move plugin asset images (if present) to /assets (SVN root)
+      
           for file in banner-*.* icon*.* screenshot-*.*; do
             if [ -f "$file" ]; then
               mv "$file" "$SVN_DIR/assets/"
             fi
           done
-
-          # Sync repo to trunk (clean)
+      
           rsync -rc --delete \
             --exclude=".git" \
             --exclude=".github" \
@@ -89,20 +84,23 @@ jobs:
             --exclude="icon*.*" \
             --exclude="screenshot-*.*" \
             ./ "$SVN_DIR/trunk/"
-
-          # Abort if tag already exists
+      
           if svn ls "$SVN_URL/tags/$VERSION" >/dev/null 2>&1; then
             echo "Tag $VERSION already exists. Bump the version in ${{ env.MAIN_FILE }} before deploying."
             exit 1
           fi
-
-          # Create tag from trunk
+      
           svn cp "$SVN_DIR/trunk" "$SVN_DIR/tags/$VERSION"
-
+      
           # Stage changes
           cd "$SVN_DIR"
-          svn status | grep '^!' | sed 's/^!//' | xargs -r svn delete
-          svn status | grep '^?' | sed 's/^?//' | xargs -r svn add
-
-          # Commit
+          DELETES=$(svn status | awk '/^!/ {print $2}')
+          if [ -n "$DELETES" ]; then
+            echo "$DELETES" | xargs -r svn delete
+          fi
+          ADDS=$(svn status | awk '/^\?/ {print $2}')
+          if [ -n "$ADDS" ]; then
+            echo "$ADDS" | xargs -r svn add
+          fi
+      
           svn commit -m "Deploy version $VERSION" --username "$SVN_USERNAME" --password "$SVN_PASSWORD" --non-interactive --trust-server-cert
